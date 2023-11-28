@@ -1,0 +1,8 @@
+# IDEs
+.idea
+
+# modules
+node_modules
+
+# compiled code
+dist
