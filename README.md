@@ -164,4 +164,4 @@ First we're creating server itself and then we're starting it on our local machi
 
 And that's a basic setup of the server, later we'll create `typeDefs` and `resolvers` functions to be able to make a requests to our server.
 
-All the start code base is available on branch `initial` under this link: 
+All the start code base is available on branch `initial` under this link: [GitHub repo](https://github.com/Michal-Turbanski/GraphQLArticle/tree/initial)
