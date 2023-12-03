@@ -265,3 +265,15 @@ const server = new ApolloServer({
 And that's it. Now we are able to make a request to our server. Let's run our server with `npm start` command. If everything goes well go to `localhost:4000` in your browser and you should see Apollo Explorer UI.
 
 ![Apollo Explorer init](images/apollo_explorer_init.png)
+
+Now let's create our first request - assume we want to get only movies and their categories. 
+
+![Apollo Explorer first request](images/apollo_explorer_first_request.png)
+
+As you can see we defined our resource - in this example it was `movies` and inside it we defined all properites we want to get - in this case `title` and `category`. 
+
+Now try making different requests with `reviews` and `authors` and try fetching different fields.
+
+## Query variables
+
+Okay, but what if we want to get only one movie? Or one review? For this purpose we will use **Query Variables**.
