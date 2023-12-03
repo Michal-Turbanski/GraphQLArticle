@@ -227,3 +227,41 @@ const server = new ApolloServer({
 ## Resolver functions
 Resolver functions are components that connect the GraphQL schema to the data sources. They are responsible for fetching or computing the data that's requested by a client's query or mutation. 
 
+Now let's create a database. We'll create a file with sets of array. Complete database is available [here](https://github.com/Michal-Turbanski/GraphQLArticle/blob/main/src/_db.ts). 
+
+Create a file `resolvers.ts` and inside it we'll define resolver functions:
+
+```typescript
+import db from './_db.js';
+
+export const resolvers = {
+    Query: {
+        movies() {
+            return db.movies;
+        },
+
+        reviews() {
+            return db.reviews;
+        },
+
+        authors() {
+            return db.authors;
+        },
+    }
+}
+```
+
+First we import our file DB. Next we're creating `resolvers` constant with `Query` property. And inside it we're creating functions which return specific arrays from the database. Notice that function names must match the names defined in the `Query` type in `type defs`. 
+
+One last thing to do is to add `resolvers` constant to Apollo constructor as a second argument in `index.ts` file. 
+
+```typescript
+const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+});
+```
+
+And that's it. Now we are able to make a request to our server. Let's run our server with `npm start` command. If everything goes well go to `localhost:4000` in your browser and you should see Apollo Explorer UI.
+
+![Apollo Explorer init](images/apollo_explorer_init.png)

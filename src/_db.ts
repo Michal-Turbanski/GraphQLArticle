@@ -1,4 +1,4 @@
-let games = [
+let movies = [
     { id: '1', title: 'Inception', category: ['Action', 'Adventure', 'Sci-Fi'] },
     { id: '2', title: 'The Matrix', category: ['Action', 'Sci-Fi'] },
     { id: '3', title: 'Interstellar', category: ['Adventure', 'Drama', 'Sci-Fi'] },
@@ -22,4 +22,4 @@ let reviews = [
     { id: '7', rating: 10, content: 'lorem ipsum', author_id: '3', movie_id: '1' },
 ];
 
-export default { games, authors, reviews }
+export default { movies, authors, reviews }
