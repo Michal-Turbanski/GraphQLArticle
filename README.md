@@ -165,3 +165,61 @@ First we're creating server itself and then we're starting it on our local machi
 And that's a basic setup of the server, later we'll create `typeDefs` and `resolvers` functions to be able to make a requests to our server.
 
 All the start code base is available on branch `initial` under this link: [GitHub repo](https://github.com/Michal-Turbanski/GraphQLArticle/tree/initial)
+
+## Type definitions
+
+**Type definitions** in GraphQL are core aspect of defining the structure and shape of data that can be queried and manipulated through a GraphQL API. They define what kinds of objects can be requested and what fields they have.
+
+GraphQL has a few scalar types which we'll be using most of the time: 
+- `String` - text data,
+- `Int` - 32-bit integer,
+- `Float` - signed double-precision floating-point value, 
+- `Boolean` - true or false value,
+- `ID` - special type used to represent unique identifiers. ID type is serialized in the same way as a String; however, defining it as ID signifies that it is unique within the GraphQL system.
+
+Let's create file `schema.ts` where we'll be storing all schema objects. We're creating three schemas that will be representing `movie`, `review` and `author`.
+
+```graphql
+export const typeDefs = `#graphql
+    type Movie {
+        id: ID!
+        title: String!
+        category: [String!]!
+    }
+    
+    type Review {
+        id: ID!
+        rating: Int!
+        content: String!
+    }
+    
+    type Author {
+        id: ID!
+        name: String!
+        verified: Boolean!
+    }
+    
+    type Query {
+        movies: [Movie]
+        reviews: [Review]
+        authors: [Author]
+    }
+`;
+```
+
+Part `#graphql` at the beginning of template string helps IDE with syntax highlighting.
+
+Exclamation mark (`!`) after type means that the field is required (cannot be null).
+
+When we're creating array of string like in this field `category: [String!]!` we force both the array and the elements inside it to be required.
+
+At the end we have a `Query` type. It's a special type in GraphQL that defines the entry points for the data that clients can read from the API. It means for example, if we call `movies` we'll get array of `Movie` objects. 
+
+Now we can import this type defs to `index.ts` file and pass it to `ApolloServer` constructor. 
+
+```typescript
+const server = new ApolloServer({
+    typeDefs
+    //resolvers
+});
+```
