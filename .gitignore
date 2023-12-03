@@ -6,3 +6,6 @@ node_modules
 
 # compiled code
 dist
+
+# OS
+.DS_Store
