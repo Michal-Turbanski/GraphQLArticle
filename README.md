@@ -223,3 +223,7 @@ const server = new ApolloServer({
     //resolvers
 });
 ```
+
+## Resolver functions
+Resolver functions are components that connect the GraphQL schema to the data sources. They are responsible for fetching or computing the data that's requested by a client's query or mutation. 
+
