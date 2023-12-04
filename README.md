@@ -277,3 +277,34 @@ Now try making different requests with `reviews` and `authors` and try fetching 
 ## Query variables
 
 Okay, but what if we want to get only one movie? Or one review? For this purpose we will use **Query Variables**.
+
+First we have to extend our entry points by adding possibility to fetch for example one review.
+
+```graphql
+movies: [Movie]
+movie(id: ID!): Movie
+```
+
+As you can see we added `id` as a query varable (it's requered) and as a result we expect one movie. 
+
+Now try to add query variables to `reviews` and `authors` resources. 
+
+After that we have to update resolver functions by adding new functions with the same names as in the schema where we return one particular eg. movie. 
+
+```typescript
+movie(_, args) {
+    return db.movies.find(movie => movie.id === args.id);
+},
+```
+
+We added `movie` function (singular form). Let's skip for now first argument, as a second argument we have to add arguments. And we're returning one movie with given `id`. 
+
+And that's it. Try to add resolver functions for `review` and `author`. 
+
+Now let's run the server and check if we can access one movie. 
+
+![Apollo Explorer Query Variables](images/apollo_explorer_query_variables.png)
+
+As you can see we can fetch one particular movie. We added id to our `query` and next we passed it to movie function. In the `Variables` section below we defined (as a JSON object) what `id` we want to get. 
+
+Try to fetch one review and author as well to train this new feature. 
