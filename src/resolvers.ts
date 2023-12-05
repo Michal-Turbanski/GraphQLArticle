@@ -43,5 +43,11 @@ export const resolvers = {
         author(parent) {
             return db.authors.find(author => author.id === parent.author_id);
         }
+    },
+    Mutation: {
+        deleteMovie(_, args) {
+            db.movies = db.movies.filter(movie => movie.id !== args.id);
+            return db.movies;
+        }
     }
 }
