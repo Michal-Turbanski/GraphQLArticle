@@ -445,3 +445,36 @@ Remember, we want to get back rest of the movies so we need to specify what fiel
 
 ### Create mutation
 
+Now let's make create mutation. To do that we'll create `addMovie` mutation and as an argument we'll use new `input` type `AddMovieInput`. As a response we'll use created movie. 
+
+```graphql
+type Mutation {
+    addMovie(movie: AddMovieInput): Movie
+    deleteMovie(id: ID!): [Movie]
+}
+
+input AddMovieInput {
+    title: String!
+    category: [String!]!
+}
+```
+
+Now let's make resolver function to it.
+
+```typescript
+addMovie(_, args){
+    let movie = {
+        ...args.movie,
+        id: Math.floor(Math.random() * 10000).toString()
+    }
+    db.movies.push(movie);
+    return movie;
+}
+```
+
+As you can see we created a new movie from given arguments. Then we generated an ID. Next we'll push new movie to DB and return this movie. You can see results below. 
+
+![Apollo explorer add mutation](images/apollo_explorer_add_mutation.png)
+
+Now let's check with `query` keyboard if movie was created. 
+

@@ -48,6 +48,15 @@ export const resolvers = {
         deleteMovie(_, args) {
             db.movies = db.movies.filter(movie => movie.id !== args.id);
             return db.movies;
+        },
+
+        addMovie(_, args){
+            let movie = {
+                ...args.movie,
+                id: Math.floor(Math.random() * 10000).toString()
+            }
+            db.movies.push(movie);
+            return movie;
         }
     }
 }

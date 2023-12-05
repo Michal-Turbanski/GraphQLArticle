@@ -31,6 +31,12 @@ export const typeDefs = `#graphql
     }
 
     type Mutation {
+        addMovie(movie: AddMovieInput): Movie
         deleteMovie(id: ID!): [Movie]
+    }
+
+    input AddMovieInput {
+        title: String!
+        category: [String!]!
     }
 `;
