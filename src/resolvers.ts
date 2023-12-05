@@ -57,6 +57,16 @@ export const resolvers = {
             }
             db.movies.push(movie);
             return movie;
+        },
+
+        updateMovie(_, args) {
+            db.movies = db.movies.map(movie => {
+                if (movie.id === args.id) {
+                    return { ...movie, ...args.edits };
+                }
+                return movie;
+            });
+            return db.movies.find(movie => movie.id === args.id);
         }
     }
 }

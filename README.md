@@ -476,5 +476,48 @@ As you can see we created a new movie from given arguments. Then we generated an
 
 ![Apollo explorer add mutation](images/apollo_explorer_add_mutation.png)
 
-Now let's check with `query` keyboard if movie was created. 
+Now please check if movie was created (using `query` keyword). 
 
+### Update mutation
+
+As always we'll start with schema and we'll create `updateMovie` mutation.
+
+```graphql
+updateMovie(id: ID!, edits: EditMovieInput!): Movie
+```
+
+And for this purpose we created new `EditMovieInput` input. 
+
+```graphql
+input EditMovieInput {
+    title: String
+    category: [String!]
+}
+```
+
+We did this because:
+- We don't want to allow modify the ID,
+- We make both `title` and `category` array optional, because we don't know what fields user would like to change.
+
+If we did this, we can move on to resolver function. 
+
+```typescript
+updateMovie(_, args) {
+    db.movies = db.movies.map(movie => {
+        if (movie.id === args.id) {
+            return { ...movie, ...args.edits };
+        }
+        return movie;
+    });
+    return db.movies.find(movie => movie.id === args.id);
+}
+```
+
+In this function we edit movie with particular id, and we can specify if we want to chage only one field or many fields. As a response we return movie with given id. 
+
+![Apollo explorer update mutation](images/apollo_explorer_update_mutation.png)
+
+As you can see everything is working as expected. We change movie with `id = 2` and we change only the title. 
+
+## Summary
+In this article, I wanted to discuss the basics of working with graphQL and show that it can be an interesting alternative to REST API. I really hope you enjoyed and you hopefully feel comfortable now with the basics of this technology. Thanks!
