@@ -404,6 +404,44 @@ At this point we unconsciously created a **resolver chain**. This means we can n
 ## Mutations
 Mutation is a type of operation used to modify data on the server. Unlike queries, which are used to fetch data, **mutations are used to create, update, or delete data**.
 
-As always we'll start with our schema and we add new `type Mutation` and .
 
+### Delete mutation
+As always we'll start with our schema and we add new `type Mutation` and `deleteMovie` function where we delete particular movie and return rest of the movies.
+
+```graphql
+type Mutation {
+    deleteMovie(id: ID!): [Movie]
+}
+```
+
+Now we need to add resolver function where we'll be working with database.
+
+```typescript
+Mutation: {
+    deleteMovie(_, args) {
+        db.movies = db.movies.filter(movie => movie.id !== args.id);
+        return db.movies;
+    }
+}
+```
+
+Now how do we actually do the mutation on the frontend side? For now we're using `query` keyword for all the request where we're fetching data. 
+
+For delete, update and create we are using `mutation` keyword. 
+
+```graphql
+mutation Delete($id: ID!) {
+    deleteMovie(id: $id) {
+        id
+        title
+        category
+    }
+}
+```
+
+![Apollo explorer delete mutation](images/apollo_explorer_delete_mutation.png)
+
+Remember, we want to get back rest of the movies so we need to specify what fields we want to get back. And if you run it, you'll get back all the movies except this with `id = 2`. Now we're using hardcoded database so when you restart your server you'll have all the movies.
+
+### Create mutation
 
