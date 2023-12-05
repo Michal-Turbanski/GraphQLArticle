@@ -390,3 +390,13 @@ Now try yourself to get:
 - Specific author and reviews related to him,
 - Specific review and its author,
 - specific review and associated movie.
+
+You can find solution [here](https://github.com/Michal-Turbanski/GraphQLArticle/blob/main/src/resolvers.ts).
+
+If you do it properly you should be able to make request like this, when we fetch a specific review with information about related movie and author. 
+
+![Apollo explorer nested data v2](images/apollo_explorer_nested_data_v2.png)
+
+At this point we unconsciously created a **resolver chain**. This means we can now get into objects endlessly. We can now, for example, retrieve a specific review. Next get information about the movie related to this review. We can finally get all the reviews about this movie. This is all thanks to the fact that we have retained the resolver chain.
+
+![Apollo explorer resolver chain](images/apolllo_explorer_resolver_chain.png)
