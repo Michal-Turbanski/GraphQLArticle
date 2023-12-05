@@ -308,3 +308,6 @@ Now let's run the server and check if we can access one movie.
 As you can see we can fetch one particular movie. We added id to our `query` and next we passed it to movie function. In the `Variables` section below we defined (as a JSON object) what `id` we want to get. 
 
 Try to fetch one review and author as well to train this new feature. 
+
+## Nested data
+Now we can move to the most powerful and sophisticated feature in GraphQL which is relationships between our data. 
