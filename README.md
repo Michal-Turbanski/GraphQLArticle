@@ -519,5 +519,8 @@ In this function we edit movie with particular id, and we can specify if we want
 
 As you can see everything is working as expected. We change movie with `id = 2` and we change only the title. 
 
+## Source code
+All source code from this course you can find [here](https://github.com/Michal-Turbanski/GraphQLArticle)
+
 ## Summary
 In this article, I wanted to discuss the basics of working with graphQL and show that it can be an interesting alternative to REST API. I really hope you enjoyed and you hopefully feel comfortable now with the basics of this technology. Thanks!
