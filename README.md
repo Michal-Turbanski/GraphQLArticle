@@ -6,24 +6,22 @@ GraphQL is an open-source query language for API, and a server-side runtime for 
 ## Key features
 - Graph**QL** is a **Q**uery **L**anguage,
 - Alternative to REST API,
-- Still uses HTTP requests under the hood, 
+- Unlike REST API, GraphQL exposes only one endpoint for all operations (**C**reate, **R**ead, **U**pdate, **D**elete),
+- Still uses HTTP requests under the hood (specifically POST method), 
 - We specify what resource and what properies we want to get back, 
-- Fetch nested related data within a single query
+- Fetch nested related data within a single query.
 
-## Differences between REST API and GraphQL
-|        REST API         |      GraphQL      |
-|:-----------------------:|:-----------------:|
-| Uses multiple endpoints | Uses one endpoint |
-
-## Problems that graphql solves
+## Problems that GraphQL solves
 - Over fetching - getting back more data than we need (unnecessary load and sending excess information),
 - Under fetching - getting back less data than we need (this requires making e.g. several requests).
 
 
 ## Prerequisites
 Before you begin, make sure you have basic knowledge about the following topics:
-- NodeJS
-- TypeScript
+- NodeJS,
+- TypeScript.
+
+In this article I'll be using NodeJS `v20.10.0` and TypeScript `v5.3.2`
 
 ## Apollo Server
 Apollo Server is an open-source GraphQL server implementation that allows you to build and run GraphQL APIs. You can run Apollo Server in various programming languages, including JavaScript (Node.js), Python, and more.
@@ -164,7 +162,7 @@ First we're creating server itself and then we're starting it on our local machi
 
 And that's a basic setup of the server, later we'll create `typeDefs` and `resolvers` functions to be able to make a requests to our server.
 
-All the start code base is available on branch `initial` under this link: [GitHub repo](https://github.com/Michal-Turbanski/GraphQLArticle/tree/initial)
+All the start code base is available on branch `initial` under this [link](https://github.com/Michal-Turbanski/GraphQLArticle/tree/initial).
 
 ## Type definitions
 
@@ -251,7 +249,7 @@ export const resolvers = {
 }
 ```
 
-First we import our file DB. Next we're creating `resolvers` constant with `Query` property. And inside it we're creating functions which return specific arrays from the database. Notice that function names must match the names defined in the `Query` type in `type defs`. 
+First we import our file DB. Next create `resolvers` constant with `Query` property. And inside it we're creating functions which return specific arrays from the database. Notice that function names must match the names defined in the `Query` type in `type defs`. 
 
 One last thing to do is to add `resolvers` constant to Apollo constructor as a second argument in `index.ts` file. 
 
@@ -380,7 +378,7 @@ Movie: {
 }
 ```
 
-Now we can go back to previous Query variables topic when we skip first argument in our resolver function. Now it will be necessary. It's a `parent` object which refers to the parent object. In our example it is a `Movie`. Thanks to it we can filter out all the reviews with given `movie_id`. And `parent.id` is really `movie.id`.
+Now we can go back to previous Query variables topic when we skip first argument in our resolver function. Now it will be necessary. It's an argument which refers to the `parent` object. In our example it is a `Movie`. Thanks to it we can filter out all the reviews with given `movie_id`. And `parent.id` is really `movie.id`.
 
 Let's try it and go to Apollo explorer and get movie with `id = 2` and all reviews related to it. 
 
@@ -389,7 +387,7 @@ Let's try it and go to Apollo explorer and get movie with `id = 2` and all revie
 Now try yourself to get:
 - Specific author and reviews related to him,
 - Specific review and its author,
-- specific review and associated movie.
+- Specific review and associated movie.
 
 You can find solution [here](https://github.com/Michal-Turbanski/GraphQLArticle/blob/main/src/resolvers.ts).
 
@@ -497,9 +495,9 @@ input EditMovieInput {
 
 We did this because:
 - We don't want to allow modify the ID,
-- We make both `title` and `category` array optional, because we don't know what fields user would like to change.
+- We made both `title` and `category` array optional, because we don't know what fields user would like to change.
 
-If we did this, we can move on to resolver function. 
+If we did this, we can move on to the resolver function. 
 
 ```typescript
 updateMovie(_, args) {
@@ -513,14 +511,14 @@ updateMovie(_, args) {
 }
 ```
 
-In this function we edit movie with particular id, and we can specify if we want to chage only one field or many fields. As a response we return movie with given id. 
+In this function we edit movie with particular id, and we can specify if we want to change only one field or many fields. As a response we return movie with given id. 
 
 ![Apollo explorer update mutation](images/apollo_explorer_update_mutation.png)
 
-As you can see everything is working as expected. We change movie with `id = 2` and we change only the title. 
+As you can see everything is working as expected. We changed movie with `id = 2` and we changed only the title. 
 
 ## Source code
-All source code from this course you can find [here](https://github.com/Michal-Turbanski/GraphQLArticle)
+All the source code from this article you can find [here](https://github.com/Michal-Turbanski/GraphQLArticle).
 
 ## Summary
 In this article, I wanted to discuss the basics of working with graphQL and show that it can be an interesting alternative to REST API. I really hope you enjoyed and you hopefully feel comfortable now with the basics of this technology. Thanks!
