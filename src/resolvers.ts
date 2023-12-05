@@ -25,5 +25,23 @@ export const resolvers = {
         author(_, args) {
             return db.authors.find(author => author.id === args.id);
         },
+    },
+    Movie: {
+        reviews(parent) {
+            return db.reviews.filter(review => review.movie_id === parent.id);
+        }
+    },
+    Author: {
+        reviews(parent) {
+            return db.reviews.filter(review => review.author_id === parent.id);
+        }
+    },
+    Review: {
+        movie(parent) {
+            return db.movies.find(movie => movie.id === parent.movie_id);
+        },
+        author(parent) {
+            return db.authors.find(author => author.id === parent.author_id);
+        }
     }
 }

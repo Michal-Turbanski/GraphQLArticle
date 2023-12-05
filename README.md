@@ -311,3 +311,82 @@ Try to fetch one review and author as well to train this new feature.
 
 ## Nested data
 Now we can move to the most powerful and sophisticated feature in GraphQL which is relationships between our data. 
+
+As you can see in our database we have `author_id` and `movie_id` for each review. 
+
+```typescript
+{ id: '1', rating: 9, content: 'lorem ipsum', author_id: '1', movie_id: '2' }
+```
+So every review has associated author and every review has associated movie. 
+And we use this relation for nesting data.
+
+So as always we'll start with updating our schema. If every review has author and ralated movie, we'll add it to the schema (both movie and author is required because every review must have an author and the film being reviewed).
+
+```graphql
+type Review {
+    id: ID!
+    rating: Int!
+    content: String!
+    movie: Movie!
+    author: Author!
+}
+```
+
+Next every movie can have multiple reviews, so we need to add array of reviews for `Movie` schema.
+
+```graphql
+reviews: [Review!]
+```
+
+Please note, that we only added exclamation mark inside the brackets, because every object in this array has to be the review. But we can't add exclamation mark after end bracket because **the movie may not have any reviews and we have to take that into account too!**
+
+And we can add the same line of code to `Author` schema because like the movie, author also can has multiple reviews. And that's enough for the schema, let's jump to the resolver functions to handle this case. 
+
+So our first case will be to fetch one movie and all reviews related to it. From a frontend side we want to make this kind of request.
+
+```graphql
+query($movieId: ID!) {
+  movie(id: $movieId) {
+    title
+    category
+    reviews {
+      rating
+      content
+    }
+  }
+}
+```
+
+For now our server doesn't know how to handle it. And if we try to make this request we get `null` in `reviews` object. 
+
+We have to add new entry in `resolver` function, but not in `Query` object (because it's not an entry point for our graph), but next to it, as a second property like this.
+
+```typescript
+export const resolvers = {
+    Query: {
+        ...
+    },
+    Movie...
+}
+```
+
+It should look like this
+
+```typescript
+Movie: {
+    reviews(parent) {
+        return db.reviews.filter(review => review.movie_id === parent.id);
+    }
+}
+```
+
+Now we can go back to previous Query variables topic when we skip first argument in our resolver function. Now it will be necessary. It's a `parent` object which refers to the parent object. In our example it is a `Movie`. Thanks to it we can filter out all the reviews with given `movie_id`. And `parent.id` is really `movie.id`.
+
+Let's try it and go to Apollo explorer and get movie with `id = 2` and all reviews related to it. 
+
+![Apollo explorer nested data](images/apollo_explorer_nested_data.png)
+
+Now try yourself to get:
+- Specific author and reviews related to him,
+- Specific review and its author,
+- specific review and associated movie.
